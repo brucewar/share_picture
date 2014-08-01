@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <title>游戏列表</title>
+  <meta name="viewport" content="user-scalable=no, width=device-width, height=device-height"/>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="screen-orientation" content="portrait"/>
+  <style>
+    html, body {
+      height: 100%;
+    }
+  </style>
+  <!-- Libraries -->
+  <link rel="stylesheet" href="../public_js/jquery/jquery.mobile-1.3.1.min.css"/>
+  <!-- including jquery -->
+
+  <script type="text/javascript">
+
+    window.onload = function () {
+      // do nothing
+    };
+  </script>
+</head>
+<body>
+<script type="text/javascript">
+  var cc = cc = cc || {};
+  cc.TransitionScene = function () {
+  };
+</script>
+<div data-role="content" class="ui-content" role="main" id="content_div" style="height:100%;">
+  <div id='errorPage' style='display:none;'>
+    <h1>
+      当前浏览器不支持WebSocket，请使用chrome or opera or firefox 18
+    </h1>
+  </div>
+  <div data-theme="c" data-role="header" data-position="fixed">
+    <h2><span id='gallery_title'></span></h2>
+    <a href="#" id="go_back" data-mini="true" data-role="button" data-icon="arrow-l"
+       onclick='goBack()'>返回</a>
+  </div>
+  <div id='gameListPage' style='width:100%;text-align:left;'>
+    <ul data-role="listview" data-inset="true" id="game_list">
+    </ul>
+  </div>
+</div>
+</body>
+<script src="../public_js/global_vars.js" async="async"></script>
+<script src="../public_js/url_parser.js" async="async"></script>
+<script src="../public_js/form_validator.js" async="async"></script>
+<script src="../public_js/jquery/jquery-1.9.1.min.js"></script>
+<script src="../public_js/jquery/jquery.mobile-1.3.1.min.js" async="async"></script>
+<script src="../public_js/utils.js"></script>
+<script src="./js/game_list.js" async="async"></script>
+<script src="../public_js/wx_share.js" async="async"></script>
+<script src="../public_js/utils.js"></script>
+
+</html>

@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <title>我的图库</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="screen-orientation" content="portrait"/>
+  <style>
+    html, body {
+      height: 100%;
+    }
+  </style>
+
+  <!-- Libraries -->
+  <link rel="stylesheet" href="../public_js/jquery/jquery.mobile-1.3.1.min.css"/>
+  <link rel="stylesheet" href="../public_js/jquery/jquery.Jcrop.min.css"/>
+  <link rel="stylesheet" href="../public_js/jquery/masonry.css"/>
+  <link rel="stylesheet" href="../public_res/css3-gaussian-blur.css"/>
+
+  <style>
+    .item {
+      width: 25%;
+    }
+
+    .item.w2 {
+      width: 50%;
+    }
+
+    .rounded {
+      -webkit-border-radius: 0px;
+      -moz-border-radius: 0px;
+      border-radius: 0px;
+      display: block;
+    }
+
+    /*
+    .rounded img {
+        opacity: 0;
+        -moz-box-shadow:0px 0px 0px #06C;
+        -webkit-box-shadow:0px 0px 0px #06C;
+        box-shadow:0px 0px 0 #06C;
+    }
+    */
+    .ui-page {
+      -webkit-backface-visibility: hidden;
+    }
+
+    .shadow {
+      -moz-box-shadow: 2px 2px 2px 2px #aaa;
+      -webkit-box-shadow: 2px 2px 2px 2px #aaa;
+      box-shadow: 2px 2px 2px 2px #aaa;
+      /* For IE 8 */
+      -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=1, Direction=90, Color='#000000')";
+      /* For IE 5.5 - 7 */
+      filter: progid:DXImageTransform.Microsoft.Shadow(Strength=1, Direction=90, Color='#000000');
+    }
+
+    .shadow_highlight {
+      -moz-box-shadow: 0px 1px 1px 1px #88c;
+      -webkit-box-shadow: 0px 1px 1px 1px #88c;
+      box-shadow: 0px 1px 1px 1px #88c;
+      /* For IE 8 */
+      -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=1, Direction=90, Color='#000000')";
+      /* For IE 5.5 - 7 */
+      filter: progid:DXImageTransform.Microsoft.Shadow(Strength=1, Direction=90, Color='#000000');
+    }
+
+  </style>
+
+  <!-- including jquery -->
+  <script src="../public_js/url_parser.js"></script>
+  <script src="../public_js/form_validator.js"></script>
+  <script src="../public_js/image_process/binaryajax.js"></script>
+  <script src="../public_js/image_process/exif.js"></script>
+  <script src="../public_js/jquery/jquery-1.9.1.min.js"></script>
+  <script src="../public_js/jquery/jquery.mobile-1.3.1.min.js"></script>
+  <!-- <script src="../public_js/jquery/jquery.masonry.min.js"></script> -->
+  <script src="../public_js/jquery/jquery.infinitescroll.min.js"></script>
+  <script src="../public_js/jquery/masonry.pkgd.js"></script>
+  <script src="../public_js/jquery/jquery.Jcrop.min.js"></script>
+  <script src="../public_js/jquery/jquery.color.js"></script>
+  <script src="../public_js/image_process/todataurl-png.js"></script>
+  <script src="../public_js/image_process/megapix-image.js"></script>
+  <script src="../public_js/image_process/image_preprocess.js"></script>
+  <script src="../public_js/sys_detector.js"></script>
+  <script src="../public_js/utils.js"></script>
+
+  <script src="./js/gallery.js"></script>
+  <script src="../public_js/wx_share.js"></script>
+
+  <script type="text/javascript">
+    window.onload = function () {
+      // move initialization code to document.ready function
+      // alert('im here'); // just for test, make sure file uploading goes sync
+    };
+  </script>
+</head>
+<body>
+<div data-role="page" id="gallery" data-url="gallery" class="page">
+  <div data-role="panel" id="upload_picture_panel" data-position="left" data-position-fixed="true">
+    <input type='hidden' id='picture_name' name='picture_name' value='未处理'/>
+    <input type="file" id="picture_content" name="picture_content"
+           onchange="resizeFile(this, 'picture_content', 'picture_preview_frame')"/>
+
+    <div class="ui-grid-a">
+      <div class="ui-block-b">
+        模糊化?<br>
+        <select name="picture_blur" id="picture_blur" data-role="slider" data-mini="true">
+          <option value="0" selected="true">否</option>
+          <option value="1">是</option>
+        </select>
+      </div>
+    </div>
+    <p>
+      <input data-inline="true" type="button" value="上传" data-mini="true" onclick="uploadFile()">
+      <a href="#" did="close_upload_panel"
+         ata-role="button" data-rel="close" data-theme="c" data-mini="true" data-inline="true">取消</a>
+    </p>
+
+    <div style='display:block' id='picture_preview_frame' align="center">
+      <img style="max-width:200px; max-height:none" src="../public_res/default_picture.png" id="picture_crop_preview"/>
+    </div>
+    <div style="display:none;">
+      <button id="show_loading" class="show-page-loading-msg" data-theme="b" data-inline="true" data-msgtext=""
+              data-textvisible="true" data-textonly="false"></button>
+      <button id="hide_loading" class="hide-page-loading-msg" data-inline="true"></button>
+    </div>
+  </div>
+
+  <div data-role="panel" id="create_game_panel" data-position="right" data-position-fixed="true">
+    <p>游戏名:<input type="text" id="game_name" name="game_name" data-mini="true"></p>
+
+    <p>截止日期:<input name="dead_line" id="dead_line" type="date" value="" data-clear-btn="true"></p>
+
+    <p>是否公开:<br><select name="public_or_not" id="public_or_not" data-role="slider" data-mini="true">
+      <option value="0" selected="true">否</option>
+      <option value="1">是</option>
+    </select></p>
+    <p>
+      <input name="create_game_btn" id="create_game_btn" data-mini="true" data-inline="true" type="button"
+             value="创建" onclick="onCreateGame()">
+      <a href="#" data-role="button" data-rel="close" data-theme="c" data-mini="true" data-inline="true">取消</a>
+    </p>
+  </div>
+
+  <div data-role="panel" id="crop_picture_panel" data-position="left" data-position-fixed="true">
+    <div class="ui-grid-a">
+      <div class="ui-block-b">
+        模糊化?<br>
+        <select name="crop_picture_blur" id="crop_picture_blur" data-role="slider" data-mini="true">
+          <option value="0" selected="true">否</option>
+          <option value="1">是</option>
+        </select>
+      </div>
+    </div>
+    <p>
+      <input data-inline="true" type="button" value="保存" data-mini="true" onclick="uploadCropFile()">
+      <a href="#" id="close_crop_panel"
+         data-role="button" data-rel="close" data-theme="c" data-mini="true" data-inline="true">取消</a>
+    </p>
+
+    <div style='display:block' id='crop_preview_frame' align="center">
+      <img style="max-width:200px; max-height:none" src="../public_res/default_picture.png"
+           id="picture_crop_only_preview"/>
+    </div>
+  </div>
+  <div data-theme="c" data-role="header" data-position="fixed" data-tap-toggle="false">
+    <div data-role="navbar" data-iconpos="right">
+      <ul>
+        <li><a href="#" data-icon="search" onclick="switchMode(0);" class="ui-btn-active">浏览图片</a></li>
+        <li><a href="#" data-icon="edit" onclick="switchMode(1);">编辑图片</a></li>
+        <li><a href="#" data-icon="star" onclick="switchMode(2);">创建游戏</a></li>
+      </ul>
+    </div>
+  </div>
+  <div data-role="content" class="ui-content" role="main">
+    <div id="container" class="masonry clearfix" style="background: #f8f8f8;">
+    </div>
+    <a href="#" data-mini="true" data-role="button" id="more_picture_button"
+       onclick="getMorePicture();" data-theme="b" data-corners="false">更多</a>
+  </div>
+  <div data-role="footer" class="ui-bar" data-position="fixed" id="gallery_footer" style="display:none;"
+       data-tap-toggle="false">
+    <fieldset id="upload_picture" style="display:none;" data-role="controlgroup" data-type="horizontal"
+              data-mini="true">
+      <a href='#upload_picture_panel' data-rel='panel' data-role="button" data-icon="plus" data-theme="b">上传图片</a>
+    </fieldset>
+    <fieldset id="create_game_frame" style="display:block; float:right; margin-right:20px;" data-role="controlgroup"
+              data-type="horizontal"
+              data-mini="true">
+      <label id="select_picture_hint"></label>
+      <a href="#" id="create_game_button" data-mini="true" data-role="button"
+         data-icon="plus" onclick='createGame();' data-theme="b" style='display:block;'>创建游戏</a>
+    </fieldset>
+    <fieldset id="game_creations" style="display:none; float:left;" data-role="controlgroup" data-type="horizontal"
+              data-mini="true">
+      <a href="#" id="clear_selected" data-mini="true" data-role="button"
+         data-icon="minus" onclick='clearSelected();' style='display:block;'>清除已选</a>
+      <select name="game_type" id="game_type" onchange="changeGameType(this)">
+        <option value="0">拼图</option>
+        <option value="1" selected="true">消除</option>
+        <!-- <option value="2">老虎机</option> -->
+        <option value="3">连连看</option>
+      </select>
+    </fieldset>
+  </div>
+  <div id="popup_picture" data-role="popup" data-overlay-theme="a" data-theme="d" data-corners="false">
+    <a class="ui-btn-right" href="#" data-role="button" data-iconpos="notext" data-icon="delete"
+       data-rel="back" data-theme="a">Close</a>
+    <img class="popphoto" style="max-height: 320px;" id="popup_picture_content" alt="" src="#">
+  </div>
+</div>
+</body>
+</html>
