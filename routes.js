@@ -1,3 +1,3 @@
-modules.export = function(app) {
+module.exports = function(app) {
 	//add routes here
 };

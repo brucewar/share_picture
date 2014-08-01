@@ -4,7 +4,7 @@ var favicon = require('static-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var config = require('./config');
+var config = require('./config').config;
 var routes = require('./routes');
 var app = express();
 
@@ -18,10 +18,10 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(cookieParser());
-app.use(express.cookieSession({
+app.use(cookieSession({
   secret: config.session_secret,
   cookie: {
-    maxAge: config.max_age
+    maxage: config.max_age
   }
 }));
 app.use(express.static(path.join(__dirname, 'public')));
