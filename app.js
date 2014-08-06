@@ -1,21 +1,20 @@
 var express = require('express');
-var engine = require('ejs-locals');
+var ejs = require('ejs');
 var path = require('path');
 var favicon = require('static-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var config = require('./config').config;
-var routes = require('./routes/basic.js');
+var routes = require('./routes');
 var app = express();
-var morgan = require('morgan');
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
-app.engine('ejs', engine);
+app.engine('.html', ejs.__express);
+app.set('view engine', 'html');
 
 app.use(favicon());
-app.use(morgan('dev')); // logger模块
+app.use(logger('dev')); // logger模块
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(cookieParser());

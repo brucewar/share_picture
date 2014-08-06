@@ -1,0 +1,33 @@
+#person_photo{
+    border: 0;
+}
+#person_photo td{
+    font-size: 12px;
+    text-align: center;
+    padding: 18px;
+}
+#photoavatar{
+    border-color: #ECECEC;
+    border-style: solid;
+    display: block;
+    width: 74px;
+    height: 74px;
+    left: -5px;
+    top: -5px;
+    z-index: -4;
+    overflow: hidden;
+}
+#photoavatar:hover{
+    border-color: #000;
+}
+#photoavatar .ui-input-text{
+    margin: 0px;
+
+}
+#file_upload{
+    height: 74px;
+    width : 100%;
+    opacity:0;
+    z-index: 10;
+    top:0px;
+}
