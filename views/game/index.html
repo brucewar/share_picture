@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <title>图片游戏首页</title>
+  <meta name="viewport" content="user-scalable=no, width=device-width, height=device-height"/>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="screen-orientation" content="portrait"/>
+  <style>
+    html, body {
+      height: 100%;
+    }
+  </style>
+  <!-- Libraries -->
+  <link rel="stylesheet" href="../public_js/jquery/jquery.mobile-1.3.1.min.css"/>
+  <!-- including jquery -->
+  <script src="../public_js/global_vars.js"></script>
+  <script src="../public_js/url_parser.js"></script>
+  <script src="../public_js/form_validator.js"></script>
+  <script src="../public_js/jquery/jquery-1.9.1.min.js"></script>
+  <script src="../public_js/jquery/jquery.mobile-1.3.1.min.js"></script>
+  <script src="./js/game_index.js"></script>
+  <script src="../public_js/wx_share.js"></script>
+  <script src="../public_js/utils.js"></script>
+
+  <script type="text/javascript">
+
+    window.onload = function () {
+      // do nothing
+    };
+
+  </script>
+</head>
+<body>
+<script type="text/javascript">
+  var cc = cc = cc || {};
+  cc.TransitionScene = function () {
+  };
+</script>
+<div data-role="content" class="ui-content" role="康作如in" id="content_div" style="height:100%;">
+  <div id='errorPage' style='display:none;'>
+    <h1>
+      当前浏览器不支持WebSocket，请使用chrome or opera or firefox 18
+    </h1>
+  </div>
+  <div id='mainPage' style='width:100%;text-align:left;'>
+    <ul data-role="listview" data-inset="true" id="latest_game_list">
+
+    </ul>
+    <div id='user_game_list' style='display:none;'>
+      <ul data-role="listview" data-inset="true" id="game_index_list">
+        <li><a href="#"><span id='user_nick_name'></span></a></li>
+        <li><a href="#" onclick="gotoGameList(0);">
+          <img src="../public_res/logo_bricks.png" style="margin:4px;">
+
+          <h2>拼图</h2>
+        </a>
+        <li><a href="#" onclick="gotoGameList(1);">
+          <img src="../public_res/logo_bubbles.png" style="margin:4px;">
+
+          <h2>消除</h2>
+        </a>
+        </li>
+        <li><a href="#" onclick="gotoGameList(2);">
+          <img src="../public_res/logo_bandits.png" style="margin:4px;">
+
+          <h2>老虎机</h2>
+        </a>
+        </li>
+        <li><a href="#" onclick="gotoGameList(3);">
+          <img src="../public_res/logo_connects.png" style="margin:4px;">
+
+          <h2>连连看</h2>
+        </a>
+        </li>
+      </ul>
+    </div>
+    <div id="gameTypeList" data-role="popup" data-theme="d">
+      <ul style="min-width: 210px;" data-role="listview" data-theme="c" data-inset="true">
+        <li data-role="divider" data-theme="c">请选择游戏的类型</li>
+        <li><a href="#">拼图</a></li>
+        <li><a href="#">消除</a></li>
+        <!-- <li><a href="#">老虎机</a></li> -->
+        <li><a href="#">连连看</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+</body>
+</html>

@@ -4,7 +4,7 @@ var registerModule = require('./register_avatar.js');
 
 /* GET home page. */
 router.get('/', function(req, res) {
-  res.render('index', { title: 'Express' });
+    res.render('index', { title: 'Express' });
 });
 
 /*upload Personal Image*/
