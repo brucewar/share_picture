@@ -1,8 +1,10 @@
-exports.registerUser = function(req, res, next) {
-  res.render('user/register');
-};
-exports.saveavatarImage = function(req, res, next) {
-	console.log(req.body);
-	console.log(1);
+var mysql = require('mysql');
+var images = require('images');
+exports.update = function(req, res, next) {
+  var userId = req.params.userId
+	if(!userId || '' == userId){
+    res.render('user/index');
+  }else{
 
-} ;
+  }
+};
