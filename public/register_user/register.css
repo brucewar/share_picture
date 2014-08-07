@@ -1,0 +1,49 @@
+#hintmessage {
+    font-size: 12px;
+    margin-bottom: 10px;
+}
+#photoavatar{
+    border-color: #ECECEC;
+    border-style: solid;
+    display: block;
+    width: 128px;
+    height: 128px;
+    left: -5px;
+    top: -5px;
+    z-index: -4;
+    background-image: url(/images/avatars/default.png);
+    overflow: hidden;
+    float: left;
+}
+#nick {
+    margin-left: 36%;
+}
+#photoavatar:hover{
+    border-color: #000;
+}
+#photoavatar .ui-input-text{
+    margin: 0px;
+    opacity: 0;
+    filter: alpha(opacity=0);
+
+}
+#file_upload{
+    height: 128px;
+    width : 100%;
+    filter: alpha(opacity=0);
+    opacity:0;
+    z-index: 0;
+    top:0px;
+}
+
+#imageOriginal{
+    width:400px;
+    height:400px;
+    overflow: hidden;
+}
+#imagePreview{
+    width:128px;
+    height:128px;
+    overflow: hidden;
+    margin-top: 10px;
+}

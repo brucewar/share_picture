@@ -1,0 +1,40 @@
+<% include header.html %>
+<div data-role="page">
+  <div data-role="header">
+    <h1 style="text-align: center;">激活页面</h1>
+  </div>
+  <div data-role="content">
+    <div id="hintmessage">头像必须在5M内，必须支持PNG/JPG/GIF格式</div>
+    <div>
+      <div id="photoavatar">
+        <input type="file" value="上传" name="files" id='file_upload'/>
+      </div>
+      <div id="nick" >
+        <label for="nickname" class="ui-hidden-accessible">昵称:</label>
+        <input type="text" name="nickname" id="fname" placeholder="昵称:">
+        <a href="#" data-role="button" data-inline="true" id="save_user">保存</a>
+      </div>
+    </div>
+
+    <div style="margin: 10px;"></div>
+    <div id="croparea" style="display: none;">
+      <div id="imageOriginal" style="overflow: hidden;">
+        <img id="original" src="#" alt="Original Image"/>
+      </div>
+      <div id="imagePreview">
+        <img id="preview" src="#" alt="Preview Image"/>
+      </div>
+    </div>
+    <div class="inline-labels">
+      <input type="hidden" size="4" id="x" name="x1" />
+      <input type="hidden" size="4" id="y" name="y1" />
+      <input type="hidden" size="4" id="w" name="w" />
+      <input type="hidden" size="4" id="h" name="h" />
+    </div>
+
+  </div>
+  <!--div data-role='footer'>
+  </div-->
+</div>
+
+<% include footer.html %>
