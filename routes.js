@@ -2,9 +2,8 @@ var express = require('express');
 var router = express.Router();
 var user = require('./controllers/user');
 
-
-router.get('/register', user.registerUser);
-router.post('/uploadownimage', user.saveavatarImage);
-
+//user manage
+router.get('/:user_id', user.register);
+router.post('/user/update', user.update);
 
 module.exports = router;

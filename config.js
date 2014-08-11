@@ -1,7 +1,6 @@
 /**
  * config of share_picture
  */
-
 exports.config = {
   //page info
   name: "share_picture",
@@ -11,16 +10,18 @@ exports.config = {
   port: "8000",
   session_secret: "sharepicture",
   max_age: 3600000 * 24 * 30,
+  web_root: __dirname,
+  upload_dir: __dirname + '/public/uploads',
 
   page_limit: 5,
 
   //db info
   db: {
-    user_name: "brucewar",
-    password: "",
     host: "127.0.0.1",
     port: 3306,
-    name: "web_game"
+    user: "brucewar",
+    password: "wjl891014",
+    database: "web_game"
   },
 
   //local test db

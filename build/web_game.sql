@@ -2,102 +2,57 @@ SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 
-USE `CmEyRBHdSYQSLfefqMRl` ;
+CREATE DATABASE IF NOT EXISTS `web_game`;
 
 -- -----------------------------------------------------
--- Table `CmEyRBHdSYQSLfefqMRl`.`blob`
+-- Table `web_game`.`users`
 -- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `CmEyRBHdSYQSLfefqMRl`.`blob` (
-  `content` BINARY(1) NOT NULL ,
-  `contentType` VARCHAR(45) NULL DEFAULT NULL ,
-  `size` INT(11) NULL DEFAULT NULL ,
-  `status` INT(11) NULL DEFAULT NULL ,
-  PRIMARY KEY (`content`) )
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
+CREATE  TABLE IF NOT EXISTS `web_game`.`users` (
+  `user_id` VARCHAR(20) NOT NULL ,
+  `nick_name` VARCHAR(45) NULL ,
+  `avatar_path` VARCHAR(100) NULL ,
+  PRIMARY KEY (`user_id`) )
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `CmEyRBHdSYQSLfefqMRl`.`connets`
+-- Table `web_game`.`pictures`
 -- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `CmEyRBHdSYQSLfefqMRl`.`connets` (
-  `gameName` VARCHAR(50) NULL DEFAULT NULL ,
-  `ownerID` VARCHAR(45) NULL DEFAULT NULL ,
-  `ownerName` VARCHAR(45) NULL DEFAULT NULL ,
-  `createData` DATETIME NULL DEFAULT NULL ,
-  `pictureIDs` VARCHAR(2048) NULL DEFAULT NULL ,
-  `iconID` VARCHAR(45) NULL DEFAULT NULL ,
-  `public` INT(11) NULL DEFAULT NULL ,
-  `playedTimes` INT(11) NULL DEFAULT NULL ,
-  `topscore` INT(11) NULL DEFAULT NULL ,
-  `topscorePlayer` INT(11) NULL DEFAULT NULL ,
-  `lastPlayers` VARCHAR(45) NULL DEFAULT NULL ,
-  `status` INT(11) NULL DEFAULT NULL )
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
+CREATE  TABLE IF NOT EXISTS `web_game`.`pictures` (
+  `upload_date` TIMESTAMP NULL ,
+  `fullimage_path` VARCHAR(100) NULL ,
+  `thumbnail_path` VARCHAR(100) NULL ,
+  `is_avatar` INT NULL ,
+  `user_id` VARCHAR(20) NULL ,
+  INDEX `user_id_idx` (`user_id` ASC) ,
+  CONSTRAINT `user_id`
+    FOREIGN KEY (`user_id` )
+    REFERENCES `web_game`.`user` (`user_id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `CmEyRBHdSYQSLfefqMRl`.`game`
+-- Table `web_game`.`games`
 -- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `CmEyRBHdSYQSLfefqMRl`.`game` (
-  `ownerID` VARBINARY(50) NULL DEFAULT NULL ,
-  `ownerName` VARCHAR(45) NULL DEFAULT NULL ,
-  `gameType` INT(11) NULL DEFAULT NULL ,
-  `createDate` DATETIME NULL DEFAULT NULL ,
-  `gameName` VARCHAR(45) NULL DEFAULT NULL ,
-  `pictureID` VARCHAR(45) NULL DEFAULT NULL ,
-  `iconID` VARCHAR(45) NULL DEFAULT NULL ,
-  `gameID` VARCHAR(45) NULL DEFAULT NULL ,
-  `status` INT(11) NULL DEFAULT NULL )
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
+CREATE  TABLE IF NOT EXISTS `web_game`.`games` (
+  `game_name` VARCHAR(30) NULL ,
+  `game_id` INT NOT NULL AUTO_INCREMENT ,
+  `create_date` TIMESTAMP NULL ,
+  `picture_pathes` VARCHAR(500) NULL ,
+  `played_times` INT NULL ,
+  `last_players` VARCHAR(135) NULL ,
+  `owner_id` VARCHAR(20) NULL ,
+  PRIMARY KEY (`game_id`) ,
+  INDEX `owner_id_idx` (`owner_id` ASC) ,
+  CONSTRAINT `owner_id`
+    FOREIGN KEY (`owner_id` )
+    REFERENCES `web_game`.`user` (`user_id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
 
-
--- -----------------------------------------------------
--- Table `CmEyRBHdSYQSLfefqMRl`.`game_record`
--- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `CmEyRBHdSYQSLfefqMRl`.`game_record` (
-  `gameID` VARCHAR(50) NULL DEFAULT NULL ,
-  `playerID` VARCHAR(45) NULL DEFAULT NULL ,
-  `playerName` VARCHAR(45) NULL DEFAULT NULL ,
-  `playerAvatar` VARCHAR(45) NULL DEFAULT NULL ,
-  `score` INT(11) NULL DEFAULT NULL )
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
-
-
--- -----------------------------------------------------
--- Table `CmEyRBHdSYQSLfefqMRl`.`picture`
--- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `CmEyRBHdSYQSLfefqMRl`.`picture` (
-  `userID` VARBINARY(50) NULL DEFAULT NULL ,
-  `pictureName` VARCHAR(45) NULL DEFAULT NULL ,
-  `uploadDate` DATETIME NULL DEFAULT NULL ,
-  `contentType` VARCHAR(30) NULL DEFAULT NULL ,
-  `fullImageBlob` VARCHAR(45) NULL DEFAULT NULL ,
-  `thumbnailId` VARBINARY(45) NULL DEFAULT NULL ,
-  `blur` INT(11) NULL DEFAULT NULL ,
-  `isAvatar` INT(11) NULL DEFAULT NULL ,
-  `status` INT(11) NULL DEFAULT NULL )
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
-
-
--- -----------------------------------------------------
--- Table `CmEyRBHdSYQSLfefqMRl`.`user`
--- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `CmEyRBHdSYQSLfefqMRl`.`user` (
-  `userID` VARCHAR(50) NOT NULL DEFAULT '' ,
-  `nickName` VARCHAR(45) NULL DEFAULT NULL ,
-  `avatarID` VARCHAR(45) NULL DEFAULT NULL ,
-  `status` INT(11) NULL DEFAULT NULL ,
-  `score` INT(11) NULL DEFAULT NULL ,
-  PRIMARY KEY (`userID`) )
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
-
-USE `CmEyRBHdSYQSLfefqMRl` ;
 
 
 SET SQL_MODE=@OLD_SQL_MODE;

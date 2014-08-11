@@ -1,0 +1,1 @@
+sequelize-auto -h 127.0.0.1 -d web_game -u brucewar -x wjl891014 -p 3306 -o ./models -e mysql
