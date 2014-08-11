@@ -3,24 +3,33 @@
   <div data-role="header">
     <h1 style="text-align: center;">激活页面</h1>
   </div>
+  <div id="userInfo"></div>
   <div data-role="content">
-    <div id="hintmessage">头像必须在5M内，必须支持PNG/JPG/GIF格式</div>
+    <div class="hintmessage">头像必须在5M内，必须支持PNG/JPG/GIF格式</div>
     <div>
-      <div id="photoavatar">
+    <%if(locals.user){%>
+      <div id="photoavatar" style="background-image: url(<%=user.avatarpath%>) ;">
+    <%}else{%>
+      <div id="photoavatar" style="background-image: url(/images/avatars/default.png);">
+    <%}%>
         <input type="file" value="上传" name="files" id='file_upload'/>
       </div>
       <div id="nick" >
         <label for="nickname" class="ui-hidden-accessible">昵称:</label>
-        <input type="text" name="nickname" id="fname" placeholder="昵称:">
+        <%if(locals.user){%>
+          <input type="text" name="nickname" value=<%=user.nickname%> id="fname" placeholder="昵称:"/>
+        <%}else{%>
+          <input type="text" name="nickname" id="fname" placeholder="昵称:"/>
+        <%}%>
         <a href="#" data-role="button" data-inline="true" id="save_user">保存</a>
       </div>
     </div>
 
-    <div style="margin: 10px;"></div>
+    <div style="margin: 35px;"></div>
     <div id="croparea" style="display: none;">
-      <div id="imageOriginal" style="overflow: hidden;">
-        <img id="original" src="#" alt="Original Image"/>
-      </div>
+      <div class="hintmessage">请选择裁剪区域：</div>
+      <div id="imageOriginal"></div>
+      <div style="margin: 15px;"></div>
       <div id="imagePreview">
         <img id="preview" src="#" alt="Preview Image"/>
       </div>
@@ -36,5 +45,6 @@
   <!--div data-role='footer'>
   </div-->
 </div>
-
+<script type="text/javascript" src='/javascripts/user_register.js'></script>
+<link rel='stylesheet' href='/stylesheets/user_register.css'/>
 <% include footer.html %>

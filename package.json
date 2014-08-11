@@ -21,5 +21,9 @@
   },
   "devDependencies": {
     "sequelize-auto": "0.0.7"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/brucewar/share_picture.git"
   }
 }
