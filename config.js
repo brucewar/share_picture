@@ -1,4 +1,4 @@
-/**
+ /**
  * config of share_picture
  */
 

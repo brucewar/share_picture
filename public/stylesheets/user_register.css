@@ -1,4 +1,4 @@
-#hintmessage {
+.hintmessage {
     font-size: 12px;
     margin-bottom: 10px;
 }
@@ -11,12 +11,11 @@
     left: -5px;
     top: -5px;
     z-index: -4;
-    background-image: url(/images/avatars/default.png);
     overflow: hidden;
     float: left;
 }
 #nick {
-    margin-left: 36%;
+    margin-left: 40%;
 }
 #photoavatar:hover{
     border-color: #000;
@@ -37,13 +36,11 @@
 }
 
 #imageOriginal{
-    width:400px;
-    height:400px;
-    overflow: hidden;
+    width:250px;
+    height:250px;
 }
 #imagePreview{
     width:128px;
     height:128px;
     overflow: hidden;
-    margin-top: 10px;
 }
