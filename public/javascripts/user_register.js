@@ -19,7 +19,6 @@ jQuery(function () {
           fileSchema = reader.result;
           $('#imageOriginal')[0].appendChild(origin);
           origin.onload = function () {
-            console.log(this.height,this.width);
             if (parseFloat(this.height / IMAGEBORDER) > parseFloat(this.width / IMAGEBORDER)) {
               scale = parseFloat(this.height / IMAGEBORDER);
               resizeImageHeight($('#original'));
@@ -135,10 +134,14 @@ jQuery(function () {
       return postData;
     }
     $('#save_user').off('click').on('click', function () {
-      var postUrl = '/postImage';
+      var postUrl = '/user/update';
       var data = createResquestObj();
       $.post(postUrl, data).done(function (res) {
-
+        if(res.status == 'failed') {
+          alert(res.msg);
+        }else {
+          location.href = res.data;
+        }
       }).fail(function () {
           alert('upload Fail');
         })

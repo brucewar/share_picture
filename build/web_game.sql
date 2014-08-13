@@ -7,7 +7,7 @@ CREATE DATABASE IF NOT EXISTS `web_game`;
 -- -----------------------------------------------------
 -- Table `web_game`.`users`
 -- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `web_game`.`users` (
+CREATE  TABLE IF NOT EXISTS `web_game`.`user` (
   `user_id` VARCHAR(20) NOT NULL ,
   `nick_name` VARCHAR(45) NULL ,
   `avatar_path` VARCHAR(100) NULL ,
@@ -18,7 +18,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `web_game`.`pictures`
 -- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `web_game`.`pictures` (
+CREATE  TABLE IF NOT EXISTS `web_game`.`picture` (
   `upload_date` TIMESTAMP NULL ,
   `fullimage_path` VARCHAR(100) NULL ,
   `thumbnail_path` VARCHAR(100) NULL ,
@@ -36,7 +36,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `web_game`.`games`
 -- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `web_game`.`games` (
+CREATE  TABLE IF NOT EXISTS `web_game`.`game` (
   `game_name` VARCHAR(30) NULL ,
   `game_id` INT NOT NULL AUTO_INCREMENT ,
   `create_date` TIMESTAMP NULL ,

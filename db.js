@@ -4,7 +4,11 @@ var Sequelize = require('sequelize');
 var sequelize = new Sequelize(config.db.database, config.db.user, config.db.password, {
   host: config.db.host,
   port: config.db.port,
-  dialect: 'mysql'
+  dialect: 'mysql',
+  define: {
+    timestamps: false,
+    freezeTableName: true
+  }
 });
 
 sequelize

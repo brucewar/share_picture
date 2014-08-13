@@ -57,24 +57,27 @@ exports.update = function(req, res, next) {
 			}).success(function(user) {
 				if (user) {
 					//用户已存在
-					if (imageData != '') {
+					if (imageData) {
 						//新头像
 						var imagePath = utils.imageProcess(nickName, fileName, imageData, width, height, pointX, pointY, scale);
 						Picture.create({
+							upload_date: new Date(),
 							fullimage_path: imagePath.origin,
 							thumbnail_path: imagePath.croped,
 							is_avatar: 1,
 							user_id: userId
 						})
 							.success(function() {
-								user.nick_name = nickName;
-								user.avatar_path = imagePath.croped;
-								user.save().success(function() {
+								User.update({
+									nick_name: nickName,
+									avatar_path: imagePath.croped
+								}, {
+									user_id: userId
+								}).success(function() {
 									res.json({
 										status: 'success',
-										croped: imagePath.croped
+										data: '/user/' + userId
 									});
-									res.end();
 								}).error(function(err) {
 									log.error('update user info failed.');
 									res.json({
@@ -83,17 +86,23 @@ exports.update = function(req, res, next) {
 									});
 								});
 							}).error(function(err) {
-								log.error('add new avatar failed.');
+								log.error('add new avatar path failed.');
 								res.json({
 									status: 'failed',
-									msg: '用户信息更新失败!'
+									msg: '图片上传失败!'
 								});
 							});
 					} else {
 						//未更新头像
-						user.nick_name = nickName;
-						user.save().success(function() {
-							res.redirect('/' + userId);
+						User.update({
+							nick_name: nickName
+						}, {
+							user_id: userId
+						}).success(function() {
+							res.json({
+								status: 'success',
+								data: '/user/' + userId
+							});
 						}).error(function(err) {
 							log.error('update user nickname failed.');
 							res.json({
@@ -104,10 +113,11 @@ exports.update = function(req, res, next) {
 					}
 				} else {
 					//用户不存在
-					if (imageData != '') {
+					if (imageData) {
 						//有头像
 						var imagePath = utils.imageProcess(nickName, fileName, imageData, width, height, pointX, pointY, scale);
 						Picture.create({
+							upload_date: new Date(),
 							fullimage_path: imagePath.origin,
 							thumbnail_path: imagePath.croped,
 							is_avatar: 1,
@@ -121,9 +131,8 @@ exports.update = function(req, res, next) {
 								}).success(function() {
 									res.json({
 										status: 'success',
-										croped: imagePath.croped
+										data: '/user/' + userId
 									});
-									res.end();
 								}).error(function(err) {
 									log.error('create user info failed.');
 									res.json({
@@ -145,7 +154,10 @@ exports.update = function(req, res, next) {
 							nick_name: nickName,
 							avatar_path: ''
 						}).success(function() {
-							res.redirect('/' + userId);
+							res.json({
+								status: 'success',
+								data: '/user/' + userId
+							});
 						}).error(function(err) {
 							log.error('add new user info failed.');
 							res.json({
