@@ -48,8 +48,8 @@ exports.md5 = function(str) {
   return str;
 };
 
-exports.imageProcess = function(nickName, fileName, imageData, width, height, pointX, pointY, scale) {
-  var userDir = path.join(config.upload_dir, nickName);
+exports.imageProcess = function(userId, fileName, imageData, width, height, pointX, pointY, scale) {
+  var userDir = path.join(config.upload_dir, userId);
   log.debug('upload image to userDir: ' + userDir);
   mkdir.mkdirsSync(userDir);
   log.debug('mkdir userDir: %s success.', userDir);
@@ -67,9 +67,9 @@ exports.imageProcess = function(nickName, fileName, imageData, width, height, po
   var cropedImage = images(originImage, pointX * scale, pointY * scale, width * scale, height * scale).size(128);
   savePath = path.resolve(path.join(userDir, cropedImageName));
   cropedImage.save(savePath);
-  log.info('save new picture %s for %s successfully.', fileName, nickName);
+  log.info('save new picture %s for %s successfully.', fileName, userId);
   return {
-    origin: '/uploads/' + nickName + '/' + originImageName,
-    croped: '/uploads/' + nickName + '/' + cropedImageName
+    origin: '/uploads/' + userId + '/' + originImageName,
+    croped: '/uploads/' + userId + '/' + cropedImageName
   };
 };

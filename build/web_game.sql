@@ -5,7 +5,7 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 CREATE DATABASE IF NOT EXISTS `web_game`;
 
 -- -----------------------------------------------------
--- Table `web_game`.`users`
+-- Table `web_game`.`user`
 -- -----------------------------------------------------
 CREATE  TABLE IF NOT EXISTS `web_game`.`user` (
   `user_id` VARCHAR(20) NOT NULL ,
@@ -16,7 +16,7 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `web_game`.`pictures`
+-- Table `web_game`.`picture`
 -- -----------------------------------------------------
 CREATE  TABLE IF NOT EXISTS `web_game`.`picture` (
   `upload_date` TIMESTAMP NULL ,
@@ -34,7 +34,7 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `web_game`.`games`
+-- Table `web_game`.`game`
 -- -----------------------------------------------------
 CREATE  TABLE IF NOT EXISTS `web_game`.`game` (
   `game_name` VARCHAR(30) NULL ,
