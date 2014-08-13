@@ -8,11 +8,11 @@ module.exports = function(sequelize, DataTypes) {
     },
     nick_name: {
       type: DataTypes.STRING,
-      allowNull: true,
+      allowNull: true
     },
     avatar_path: {
       type: DataTypes.STRING,
-      allowNull: true,
+      allowNull: true
     }
   });
 };

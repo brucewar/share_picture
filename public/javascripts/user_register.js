@@ -126,14 +126,9 @@ jQuery(function () {
         postData['filename'] = filename;
       }
       if (fileSchema) {
-        read.readAsArrayBuffer(file);
-        read.onload = function() {
-          var Buffer = read.result;
-          postData['imagedata'] = fileSchema;
-
-        }
-
+        postData['imagedata'] = fileSchema;
       }
+
       if (scale) {
         postData['scale'] = scale;
       }

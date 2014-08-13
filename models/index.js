@@ -1,19 +1,24 @@
-var fs        = require('fs')
-  , path      = require('path')
+var fs = require('fs')
+  , path = require('path')
   , Sequelize = require('sequelize')
-  , lodash    = require('lodash')
-  , config    = require('../config').config
+  , lodash = require('lodash')
+  , config = require('../config').config
   , sequelize = new Sequelize(config.db.database, config.db.user, config.db.password,
-                {
-                  host: config.db.host,
-                  port: config.db.port,
-                  dialect: 'mysql'
-                });
-  var db = {};
+    {
+      host:config.db.host,
+      port:config.db.port,
+      dialect:'mysql',
+      define: {
+        freezeTableName: true,
+        timestamps: false
+      }
+    }
+  );
+var db = {};
 
 sequelize
   .authenticate()
-  .complete(function(err) {
+  .complete(function (err) {
     if (err) {
       throw err[0];
     } else {
@@ -23,21 +28,21 @@ sequelize
 
 fs
   .readdirSync(__dirname)
-  .filter(function(file) {
+  .filter(function (file) {
     return (file.indexOf('.') !== 0) && (file !== 'index.js')
   })
-  .forEach(function(file) {
+  .forEach(function (file) {
     var model = sequelize.import(path.join(__dirname, file));
     db[model.name] = model
   });
 
-Object.keys(db).forEach(function(modelName) {
+Object.keys(db).forEach(function (modelName) {
   if ('associate' in db[modelName]) {
     db[modelName].associate(db)
   }
 });
 
 module.exports = lodash.extend({
-  sequelize: sequelize,
-  Sequelize: Sequelize
+  sequelize:sequelize,
+  Sequelize:Sequelize
 }, db);

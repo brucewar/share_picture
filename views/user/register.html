@@ -7,7 +7,7 @@
   <div data-role="content">
     <div class="hintmessage">头像必须在5M内，必须支持PNG/JPG/GIF格式</div>
     <div>
-    <%if(locals.user.avatar_path){%>
+    <%if(locals.user && locals.user.avatar_path){%>
       <div id="photoavatar" style="background-image: url(<%=user.avatar_path%>) ;">
     <%}else{%>
       <div id="photoavatar" style="background-image: url(/images/avatars/default.png);">
@@ -15,13 +15,8 @@
         <input type="file" value="上传" name="files" id='file_upload'/>
       </div>
       <div id="nick" >
-<<<<<<< HEAD
         <label for="nick_name" class="ui-hidden-accessible">昵称:</label>
-        <%if(locals.user){%>
-=======
-        <label for="nickname" class="ui-hidden-accessible">昵称:</label>
-        <%if(locals.user.nick_name){%>
->>>>>>> a20fdef09585fceafcbadbc3a62d9bf784997426
+        <%if(locals.user && locals.user.nick_name){%>
           <input type="text" name="nickname" value=<%=user.nick_name%> id="fname" placeholder="昵称:"/>
         <%}else{%>
           <input type="text" name="nickname" id="fname" placeholder="昵称:"/>
