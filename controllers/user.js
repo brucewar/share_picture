@@ -116,37 +116,37 @@ exports.update = function(req, res, next) {
 					if (imageData) {
 						//有头像
 						var imagePath = utils.imageProcess(nickName, fileName, imageData, width, height, pointX, pointY, scale);
-						Picture.create({
-							upload_date: new Date(),
-							fullimage_path: imagePath.origin,
-							thumbnail_path: imagePath.croped,
-							is_avatar: 1,
-							user_id: userId
-						})
-							.success(function() {
-								User.create({
-									user_id: userId,
-									nick_name: nickName,
-									avatar_path: imagePath.croped
-								}).success(function() {
+						User.create({
+							user_id: userId,
+							nick_name: nickName,
+							avatar_path: imagePath.croped
+						}).success(function() {
+							Picture.create({
+								upload_date: new Date(),
+								fullimage_path: imagePath.origin,
+								thumbnail_path: imagePath.croped,
+								is_avatar: 1,
+								user_id: userId
+							})
+								.success(function() {
 									res.json({
 										status: 'success',
 										data: '/user/' + userId
 									});
 								}).error(function(err) {
-									log.error('create user info failed.');
+									log.error('add new avatar failed.');
 									res.json({
 										status: 'failed',
 										msg: '用户信息添加失败!'
 									});
 								});
-							}).error(function(err) {
-								log.error('add new avatar failed.');
-								res.json({
-									status: 'failed',
-									msg: '用户信息添加失败!'
-								});
+						}).error(function(err) {
+							log.error('create user info failed.');
+							res.json({
+								status: 'failed',
+								msg: '用户信息添加失败!'
 							});
+						});
 					} else {
 						//无头像
 						User.create({
