@@ -3,11 +3,12 @@ jQuery(function () {
   var filename;
   var scale;
   var IMAGEBORDER = 250;
+  var file;
 
   function initUploadOperation() {
     var imageType = /image.*/;
     function readURL(input) {
-      var file = input.files[0];
+      file = input.files[0];
       if (file.type.match(imageType)) {
         $('#croparea').show();
         var reader = new FileReader();
@@ -126,7 +127,13 @@ jQuery(function () {
         postData['filename'] = filename;
       }
       if (fileSchema) {
-        postData['imagedata'] = fileSchema;
+        read.readAsArrayBuffer(file);
+        read.onload = function() {
+          var Buffer = read.result;
+          postData['imagedata'] = fileSchema;
+
+        }
+
       }
       if (scale) {
         postData['scale'] = scale;

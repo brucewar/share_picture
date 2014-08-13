@@ -1,27 +1,25 @@
-var sequelize = require('sequelize'),
-	models = require('../models'),
-	images = require('images'),
-	config = require('../config').config,
-	fs = require('fs'),
-	utils = require('../libs/utils'),
-	Log = require('log');
-var User = models.User;
-var Picture = models.Picture;
+var db = require('../models'),
+  images = require('images'),
+  log = require('../libs/log'),
+	fs = require('fs');
+  var User = db.user;
+  var Picture = db.picture;
 
-var stream = fs.createWriteStream(__dirname + '/../logs/' + utils.formatDate('YYYYMMDD') + '.log');
-var log = new Log(config.log_level, stream);
+
 
 exports.register = function(req, res, next) {
 	var userId = req.params.user_id;
 	User.find({
-		where: {
-			user_id: userId
-		}
-	}).success(function(user) {
-		res.render('user/register', {
-			user: user
-		});
-	}).error(function(err) {
+      where: {
+        user_id: userId
+      }
+    }
+   ).success(function(user) {
+		    res.render('user/register', {
+			   user: user}
+        )}
+	 ).error(function(err) {
+    console.log(err);
 		log.error('query user with user_id %s failed.', userId);
 		next(err);
 	});

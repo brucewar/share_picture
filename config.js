@@ -19,8 +19,8 @@ exports.config = {
   db: {
     host: "127.0.0.1",
     port: 3306,
-    user: "brucewar",
-    password: "wjl891014",
+    user: "root",
+    password: "root",
     database: "web_game"
   },
 
