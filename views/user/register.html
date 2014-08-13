@@ -15,8 +15,13 @@
         <input type="file" value="上传" name="files" id='file_upload'/>
       </div>
       <div id="nick" >
+<<<<<<< HEAD
         <label for="nick_name" class="ui-hidden-accessible">昵称:</label>
         <%if(locals.user){%>
+=======
+        <label for="nickname" class="ui-hidden-accessible">昵称:</label>
+        <%if(locals.user.nick_name){%>
+>>>>>>> a20fdef09585fceafcbadbc3a62d9bf784997426
           <input type="text" name="nickname" value=<%=user.nick_name%> id="fname" placeholder="昵称:"/>
         <%}else{%>
           <input type="text" name="nickname" id="fname" placeholder="昵称:"/>

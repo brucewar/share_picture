@@ -17,8 +17,8 @@
     "images": "~2.0.2",
     "sequelize": "~1.7.9",
     "mysql": "~2.4.2",
-    "ndir": "~0.1.5",
-    "lodash": "~2.4.1"
+    "lodash": "~2.4.1",
+    "mkdir": "0.0.2"
   },
   "devDependencies": {
     "sequelize-auto": "0.0.7"

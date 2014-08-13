@@ -7,7 +7,6 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var config = require('./config').config;
 var routes = require('./routes');
-var db = require('./models');
 var app = express();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -54,5 +53,4 @@ app.use(function(err, req, res, next) {
 });
 
 app.listen(config.port);
-
-
+module.exports = app;

@@ -4,7 +4,7 @@ var config = require('../config').config;
 var path = require('path');
 var fs = require('fs');
 var Log = require('log');
-var ndir = require('ndir');
+var mkdir = require('mkdir');
 
 /**
  * Format the date as you want.
@@ -51,27 +51,25 @@ exports.md5 = function(str) {
 exports.imageProcess = function(nickName, fileName, imageData, width, height, pointX, pointY, scale) {
   var userDir = path.join(config.upload_dir, nickName);
   log.debug('upload image to userDir: ' + userDir);
-  ndir.mkdir(userDir, function(err) {
-    if (err) {
-      log.error('mkdir %s failed.', userDir);
-      return err;
-    }
-    var imageType, fileName, now, originImageName, cropedImageName, savePath;
-    imageType = fileName.substring(fileName.lastIndexOf('.'));
-    fileName = fileName.substring(0, fileName.lastIndexOf('.'));
-    now = Date.now();
-    originImageName = fileName + '_' + now + imageType;
-    cropedImageName = fileName + '_' + now + '_thumbnail' + imageType;
-    savePath = path.resolve(path.join(userDir, originImageName));
-    var originImage = images(imageData);
-    originImage.save(savePath);
-    var cropedImage = images(originImage, pointX * scale, pointY * scale, width * scale, height * scale);
-    savePath = path.resolve(path.join(userDir, cropedImageName));
-    cropedImage.save(savePath);
-    images.gc();
-    return {
-      origin: '/uploads/' + nickName + originImageName,
-      croped: '/uploads/' + nickName + cropedImageName
-    };
-  });
+  mkdir.mkdirsSync(userDir);
+  log.debug('mkdir userDir: %s success.', userDir);
+  var imageType, now, originImageName, cropedImageName, savePath;
+  imageType = fileName.substring(fileName.lastIndexOf('.'));
+  fileName = fileName.substring(0, fileName.lastIndexOf('.'));
+  imageData = imageData.split(';base64,')[1];
+  imageData = new Buffer(imageData, 'base64');
+  now = Date.now();
+  originImageName = fileName + '_' + now + imageType;
+  cropedImageName = fileName + '_' + now + '_thumbnail' + imageType;
+  savePath = path.resolve(path.join(userDir, originImageName));
+  var originImage = images(imageData);
+  originImage.save(savePath);
+  var cropedImage = images(originImage, pointX * scale, pointY * scale, width * scale, height * scale).size(128);
+  savePath = path.resolve(path.join(userDir, cropedImageName));
+  cropedImage.save(savePath);
+  log.info('save new picture %s for %s successfully.', fileName, nickName);
+  return {
+    origin: '/uploads/' + nickName + '/' + originImageName,
+    croped: '/uploads/' + nickName + '/' + cropedImageName
+  };
 };
