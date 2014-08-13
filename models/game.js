@@ -8,6 +8,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     game_id: {
       type: DataTypes.INTEGER(11),
+      primaryKey: true,
       allowNull: false,
     },
     create_date: {
