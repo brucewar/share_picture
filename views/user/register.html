@@ -27,12 +27,8 @@
 
     <div style="margin: 35px;"></div>
     <div id="croparea" style="display: none;">
-      <div class="hintmessage">请选择裁剪区域：</div>
+      <div class="hintmessage">请选择裁剪区域(<span style="color:red">尽量选择1M以内的图片</span>)：</div>
       <div id="imageOriginal"></div>
-      <div style="margin: 15px;"></div>
-      <div id="imagePreview">
-        <img id="preview" src="#" alt="Preview Image"/>
-      </div>
     </div>
     <div class="inline-labels">
       <input type="hidden" size="4" id="x" name="x1" />
@@ -40,11 +36,11 @@
       <input type="hidden" size="4" id="w" name="w" />
       <input type="hidden" size="4" id="h" name="h" />
     </div>
-
   </div>
   <!--div data-role='footer'>
   </div-->
 </div>
+<div id="fullbg"></div>
 <script type="text/javascript" src='/javascripts/user_register.js'></script>
 <link rel='stylesheet' href='/stylesheets/user_register.css'/>
 <% include footer.html %>

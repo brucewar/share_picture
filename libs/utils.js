@@ -2,7 +2,8 @@ var crypto = require('crypto');
 var images = require('images');
 var config = require('../config').config;
 var path = require('path');
-var log = require('../libs/log');
+var fs = require('fs');
+var Log = require('log');
 var mkdir = require('mkdir');
 
 /**
@@ -36,6 +37,9 @@ exports.formatDate = function(date, format) {
   formatStr = formatStr.replace(/w|W/g, week[date.getDay()]);
   return formatStr;
 };
+
+var stream = fs.createWriteStream(__dirname + '/../logs/' + exports.formatDate('YYYYMMDD') + '.log');
+var log = new Log(config.log_level, stream);
 
 exports.md5 = function(str) {
   var md5Hash = crypto.createHash('md5');

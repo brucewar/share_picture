@@ -3,12 +3,11 @@ jQuery(function () {
   var filename;
   var scale;
   var IMAGEBORDER = 250;
-  var file;
 
   function initUploadOperation() {
     var imageType = /image.*/;
     function readURL(input) {
-      file = input.files[0];
+      var file = input.files[0];
       if (file.type.match(imageType)) {
         $('#croparea').show();
         var reader = new FileReader();
@@ -27,13 +26,13 @@ jQuery(function () {
               scale = parseFloat(this.width / IMAGEBORDER);
               resizeImageWidth($('#original'));
             }
-            $('#preview').attr('src', reader.result);
             $('#original').Jcrop({
               onChange:showPreview,
               onSelect:showPreview,
               aspectRatio:1,
               addClass: 'jcrop-drak'
-            })
+            });
+            $.unblockUI();
           }
         };
         reader.readAsDataURL(file);
@@ -48,15 +47,15 @@ jQuery(function () {
       var div_height = oImage.parent().height();
       if (img_height < div_height) {
         //IMAGE IS SHORTER THAN CONTAINER HEIGHT - CENTER IT VERTICALLY
-        var newMargin = (div_height-img_height)/2+'px';
+        var newMargin = (div_height - img_height)/2+'px';
         oImage.css({'margin-top': newMargin });
-      } else if (img_height>div_height){
+      } else if (img_height > div_height){
         //IMAGE IS GREATER THAN CONTAINER HEIGHT - REDUCE HEIGHT TO CONTAINER MAX - SET WIDTH TO AUTO
         oImage.css({'width': 'auto', 'height': '100%'});
         //CENTER IT HORIZONTALLY
         var img_width = oImage.width();
         var div_width = oImage.parent().width();
-        var newMargin = (div_width-img_width)/2+'px';
+        var newMargin = (div_width - img_width)/2+'px';
         oImage.css({'margin-left': newMargin});
       }
     }
@@ -66,7 +65,7 @@ jQuery(function () {
       var div_width = oImage.parent().width();
       if(img_width<div_width){
         //IMAGE IS SHORTER THAN CONTAINER HEIGHT - CENTER IT VERTICALLY
-        var newMargin = (div_width-img_width)/2+'px';
+        var newMargin = (div_width - img_width)/2+'px';
         oImage.css({'margin-left': newMargin });
       }else if(img_width>div_width){
         //IMAGE IS GREATER THAN CONTAINER HEIGHT - REDUCE HEIGHT TO CONTAINER MAX - SET WIDTH TO AUTO
@@ -74,7 +73,7 @@ jQuery(function () {
         //CENTER IT HORIZONTALLY
         var img_height = oImage.height();
         var div_height = oImage.parent().height();
-        var newMargin = (div_height-img_height)/2+'px';
+        var newMargin = (div_height - img_height)/2+'px';
         oImage.css({'margin-top': newMargin});
       }
     }
@@ -84,12 +83,6 @@ jQuery(function () {
       var ry = 128 / coords.h;
       var img_height = $('#original').height();
       var img_width = $('#original').width();
-      $('#preview').css({
-        width:Math.round(rx * img_width) + 'px',
-        height:Math.round(ry * img_height) + 'px',
-        marginLeft:'-' + Math.round(rx * coords.x) + 'px',
-        marginTop:'-' + Math.round(ry * coords.y) + 'px'
-      });
       $('#x').val(coords.x);
       $('#y').val(coords.y);
       $('#w').val(coords.w);
@@ -99,7 +92,6 @@ jQuery(function () {
     $('#file_upload').change(function () {
       readURL(this);
     });
-
     function createResquestObj() {
       var postData = {};
       var x = $('#x').val();
@@ -128,23 +120,46 @@ jQuery(function () {
       if (fileSchema) {
         postData['imagedata'] = fileSchema;
       }
-
       if (scale) {
         postData['scale'] = scale;
       }
       postData['userid'] = 'abc';
       return postData;
     }
-    $('#save_user').off('click').on('click', function () {
+    function resetFormData() {
+      $('#x').val("");
+      $('#y').val("");
+      $('#w').val("");
+      $('#h').val("");
+    }
+    $('#save_user').off('click').fastClick(function() {
       var postUrl = '/user/update';
       var data = createResquestObj();
+      if (!data.x && !data.y && data.imagedata) {
+        alert('请先截图');
+        return false;
+      }
+      $.blockUI({message: '<img src="/images/ajax-loader.gif"/>',
+        css: {
+          border: 'none',
+          padding: '15px',
+          backgroundColor: '#000',
+          '-webkit-border-radius': '10px',
+          '-moz-border-radius': '10px',
+          opacity: .5,
+          color: '#fff'
+        } });
       $.post(postUrl, data).done(function (res) {
         if(res.status == 'failed') {
           alert(res.msg);
         }else {
           location.href = res.data;
         }
+        resetFormData();
+        $.unblockUI();
       }).fail(function () {
+          $.unblockUI();
+          resetFormData();
           alert('upload Fail');
         })
     });
