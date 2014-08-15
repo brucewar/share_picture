@@ -2,7 +2,8 @@ var crypto = require('crypto');
 var images = require('images');
 var config = require('../config').config;
 var path = require('path');
-var log = require('../libs/log');
+var fs = require('fs');
+var Log = require('log');
 var mkdir = require('mkdir');
 
 /**
@@ -44,6 +45,8 @@ exports.md5 = function(str) {
   return str;
 };
 
+var stream = fs.createWriteStream(__dirname + '/../logs/' + exports.formatDate('YYYYMMDD') + '.log');
+var log = new Log(config.log_level, stream);
 exports.imageProcess = function(userId, fileName, imageData, width, height, pointX, pointY, scale) {
   var userDir = path.join(config.upload_dir, userId);
   log.debug('upload image to userDir: ' + userDir);

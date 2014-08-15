@@ -59,7 +59,6 @@ exports.update = function(req, res, next) {
 							upload_date: new Date(),
 							fullimage_path: imagePath.origin,
 							thumbnail_path: imagePath.croped,
-							is_avatar: 1,
 							user_id: userId
 						})
 							.success(function() {
@@ -120,7 +119,6 @@ exports.update = function(req, res, next) {
 								upload_date: new Date(),
 								fullimage_path: imagePath.origin,
 								thumbnail_path: imagePath.croped,
-								is_avatar: 1,
 								user_id: userId
 							})
 								.success(function() {

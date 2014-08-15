@@ -19,10 +19,6 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING,
       allowNull: true,
     },
-    is_avatar: {
-      type: DataTypes.INTEGER(11),
-      allowNull: true,
-    },
     user_id: {
       type: DataTypes.STRING,
       allowNull: true,
