@@ -8,6 +8,7 @@ var Picture = models.picture;
 
 exports.register = function(req, res, next) {
 	var userId = req.params.user_id;
+  log.debug('ab');
 	User.find({
 		where: {
 			user_id: userId

@@ -38,6 +38,9 @@ exports.formatDate = function(date, format) {
   return formatStr;
 };
 
+var stream = fs.createWriteStream(__dirname + '/../logs/' + exports.formatDate('YYYYMMDD') + '.log');
+var log = new Log(config.log_level, stream);
+
 exports.md5 = function(str) {
   var md5Hash = crypto.createHash('md5');
   md5Hash.update(str);
